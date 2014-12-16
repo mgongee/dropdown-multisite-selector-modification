@@ -5,10 +5,10 @@ $options;
 $multisite;
 $placeholder;
 
-$options_db_name = 'dms_select_name';
-$options_db_select = 'dms_options';
-$options_db_multisite = 'dms_multisite';
-$options_db_placeholder = 'dms_placeholder';
+$options_db_name = 'dms2_dms_select_name';
+$options_db_select = 'dms2_dms_options';
+$options_db_multisite = 'dms2_dms_multisite';
+$options_db_placeholder = 'dms2_dms_placeholder';
 
 if(get_option( $options_db_name ) ){
 	$name = get_option( $options_db_name );
@@ -35,11 +35,11 @@ else {
 
 <div class="dms-admin">
 	
-	<h1>Dropdown Multisite Selector</h1>
+	<h1>Dropdown Multisite Selector 2</h1>
 	
 	<div class="dms-description">
 		
-		<h2><?php _e('Description','dropdown-multisite-selector');?></h2>
+		<h2><?php _e('Description','dms2_dropdown-multisite-selector');?></h2>
 		
 		<p> <?php _e('This plugin allows you to add a simple select filed to your page giving the option to the user to switch between different urls/pages/sites. In the fields below just fill the requiered information. "Option Name" is the name that will be seen by the user, and "URL to redirect" is the place you would like to redirect your visitor when selecting the relevant option.');?></p>
 		<p> <?php _e('The Wordpress Multisite Network(WMN) Options gives you the option for creating an automatic list of options. <b>Show all sites in the WMN</b> is for a list with all the sites from the WMN, while the <b>Show only the sites where the user is registered in the WMN</b> is only for those sites where the logged in user is already registered - it is a nice and easy way to navigate throug your multisite.','dropdown-multisite-selector'); ?></p>
@@ -50,29 +50,29 @@ else {
 	</div>
 
 	<div class="dms-formular">
-		<h2><?php _e('Options','dropdown-multisite-selector');?></h2>
+		<h2><?php _e('Options','dms2_dropdown-multisite-selector');?></h2>
 		<p class="succes_log"></p>
 		<p class="overall-error"></p>
 		<form action="" id="dms-all-inputs">
 		
 			<fieldset>
-				<legend><?php _e('Dropdown settings','dropdown-multisite-selector');?></legend>
+				<legend><?php _e('Dropdown settings','dms2_dropdown-multisite-selector');?></legend>
 				<p class="error-log-name"></p>
-				<label for="select_name"><?php _e('The select tag label','dropdown-multisite-selector');?></label></br>
+				<label for="select_name"><?php _e('The select tag label','dms2_dropdown-multisite-selector');?></label></br>
 				<input type="text" id="select_name" value="<?php echo $name; ?>" name="select_name"></br>
-				<label for="select_placeholder"><?php _e('The first option to show in the select element (for instance "Select site", "Select Option")','dropdown-multisite-selector');?></label></br>
+				<label for="select_placeholder"><?php _e('The first option to show in the select element (for instance "Select site", "Select Option")','dms2_dropdown-multisite-selector');?></label></br>
 				<input type="text" id="select_placeholder" value="<?php echo $placeholder; ?>" name="select_placeholder"></br>
 			</fieldset>
 			
 			<fieldset class="middle-box">
-				<legend><?php _e('Dropdown fields','dropdown-multisite-selector');?></legend>
+				<legend><?php _e('Dropdown fields','dms2_dropdown-multisite-selector');?></legend>
 				<div <?php if($multisite!='none' && $multisite){echo 'class="mask-middle"';} ?> ></div>
 				<p class="error-log-fields"></p>
-				<table id="dms-table">
+				<table id="dms2_dms-table">
 					<thead>
 						<tr>
-							<th><?php _e('Option name','dropdown-multisite-selector');?></th>
-							<th><?php _e('URL to redirect','dropdown-multisite-selector');?></th>
+							<th><?php _e('Option name','dms2_dropdown-multisite-selector');?></th>
+							<th><?php _e('URL to redirect','dms2_dropdown-multisite-selector');?></th>
 						</tr>
 					<thead>
 					<tbody>
@@ -116,21 +116,21 @@ else {
 					</tbody>
 				</table>
 
-				<input type="button" value="<?php _e('Add field','dropdown-multisite-selector');?>" name="add-field" id="dms-add">
+				<input type="button" value="<?php _e('Add field','dms2_dropdown-multisite-selector');?>" name="add-field" id="dms2_dms-add">
 
 			</fieldset>
 			
 			<fieldset>
 				
-				<legend><?php _e('Wordpress Multisite Network(WMN) Options','dropdown-multisite-selector'); ?></legend>
+				<legend><?php _e('Wordpress Multisite Network(WMN) Options','dms2_dropdown-multisite-selector'); ?></legend>
 
-				<input id="radio-none" type="radio" name="multisite" <?php if ($multisite=='none' || ! $multisite) {echo 'checked="checked"';} ?> value="none"><?php _e('Disabled','dropdown-multisite-selector'); ?><br>
-				<input id="radio-all" type="radio" name="multisite" <?php if ($multisite=='all') {echo 'checked="checked"';} ?> value="all"><?php _e('Show all sites in the WMN.','dropdown-multisite-selector'); ?><br>
-				<input id="radio-users" type="radio" name="multisite" <?php if ($multisite=='usersonly') {echo 'checked="checked"';} ?> value="usersonly"><?php _e('Show only the sites where the user is registered in the WMN.','dropdown-multisite-selector'); ?><br>
+				<input id="radio-none" type="radio" name="multisite" <?php if ($multisite=='none' || ! $multisite) {echo 'checked="checked"';} ?> value="none"><?php _e('Disabled','dms2_dropdown-multisite-selector'); ?><br>
+				<input id="radio-all" type="radio" name="multisite" <?php if ($multisite=='all') {echo 'checked="checked"';} ?> value="all"><?php _e('Show all sites in the WMN.','dms2_dropdown-multisite-selector'); ?><br>
+				<input id="radio-users" type="radio" name="multisite" <?php if ($multisite=='usersonly') {echo 'checked="checked"';} ?> value="usersonly"><?php _e('Show only the sites where the user is registered in the WMN.','dms2_dropdown-multisite-selector'); ?><br>
 
 			</fieldset>
 
-				<input type="submit" value="<?php _e('Save','dropdown-multisite-selector');?>" name="submit" id="dms-submit">
+				<input type="submit" value="<?php _e('Save','dms2_dropdown-multisite-selector');?>" name="submit" id="dms2_dms-submit">
 				
 				
 		

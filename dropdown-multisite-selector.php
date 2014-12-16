@@ -1,7 +1,7 @@
 <?php
 /**
  *
- * Plugin Name:       Dropdown multisite selector
+ * Plugin Name:       Dropdown multisite selector 2
  * Plugin URI:        https://github.com/alordiel/dropdown-multisite
  * Description:       Allows you to configure a select option of redirecting to different webpages.
  * Version:           0.4.1
@@ -37,19 +37,19 @@ if ( ! defined( 'WPINC' ) ) {
 /**
  * Register textdomain.
  */
-add_action('plugins_loaded', 'dropdown_multisite_meta_init');
-function dropdown_multisite_meta_init() {
-	load_plugin_textdomain( 'dropdown-multisite-selector', false, dirname( plugin_basename( __FILE__ ) ) ); 
+add_action('plugins_loaded', 'dms2_dropdown_multisite_meta_init');
+function dms2_dropdown_multisite_meta_init() {
+	load_plugin_textdomain( 'dms2_dropdown-multisite-selector', false, dirname( plugin_basename( __FILE__ ) ) ); 
 }
 
 
 /**
  * Register style sheet and scripts for the admin area.
  */
-add_action( 'admin_enqueue_scripts', 'admin_styles_script' );
-function admin_styles_script() {
-	wp_enqueue_script( 'dms-functions', plugins_url( '/js/dms-functions.js' , __FILE__) );
-	wp_enqueue_style( 'dms-style', plugins_url( '/css/dms-style.css', __FILE__ ) );
+add_action( 'admin_enqueue_scripts', 'dms2_admin_styles_script' );
+function dms2_admin_styles_script() {
+	wp_enqueue_script( 'dms2_dms-functions', plugins_url( '/js/dms-functions.js' , __FILE__) );
+	wp_enqueue_style( 'dms2_dms-style', plugins_url( '/css/dms-style.css', __FILE__ ) );
 	
 	//Adding localization for script string
 	$translation_array = array( 
@@ -60,34 +60,34 @@ function admin_styles_script() {
 		'suc_err' => __('Your settings were saved successfully.'),
 		'err_err' => __('Something went wrong!Please check your data and try again.')
 	);
-	wp_localize_script( 'dms-functions', 'trans_str', $translation_array );
+	wp_localize_script( 'dms2_dms-functions', 'trans_str', $translation_array );
 
-	wp_localize_script( 'dms-functions', 'dms_ajax_vars', array( 'ajax_url' => admin_url( 'admin-ajax.php' )));
+	wp_localize_script( 'dms2_dms-functions', 'dms2_dms_ajax_vars', array( 'ajax_url' => admin_url( 'admin-ajax.php' )));
 }
 
 /**
  * Register style sheet and scripts for the front.
  */
-add_action( 'wp_enqueue_scripts', 'front_styles_script' );
-function front_styles_script(){
-	wp_enqueue_script( 'dms-functions-front', plugins_url( '/js/dms-front.js' , __FILE__), array(), '1.0.0', true );
-	wp_enqueue_style( 'dms-style-front', plugins_url( '/css/dms-front.css', __FILE__ ) );
+add_action( 'wp_enqueue_scripts', 'dms2_front_styles_script' );
+function dms2_front_styles_script(){
+	wp_enqueue_script( 'dms2_dms-functions-front', plugins_url( '/js/dms-front.js' , __FILE__), array(), '1.0.0', true );
+	wp_enqueue_style( 'dms2_dms-style-front', plugins_url( '/css/dms-front.css', __FILE__ ) );
 }
 
 /**
  * Register submenu in Settings.
  */
-add_action('admin_menu','register_submenu');
-function register_submenu(){
+add_action('admin_menu','dms2_register_submenu');
+function dms2_register_submenu(){
 	
-	add_submenu_page( 'options-general.php', 'Dropdown Multisite Selector', 'Dropdown Multisite', 'manage_options', 'dropdown-multisite-selector', 'dms_admin' );
+	add_submenu_page( 'options-general.php', 'Dropdown Multisite Selector 2', 'Dropdown Multisite 2', 'manage_options', 'dropdown-multisite-selector2', 'dms2_dms_admin' );
 
 }
 
 /**
  * Building the admin part.
  */ 
-function dms_admin(){
+function dms2_dms_admin(){
 
 	$out = include('dms-admin.php');
 
@@ -97,8 +97,8 @@ function dms_admin(){
 /**
  * Building the admin part.
  */ 
-add_action("wp_ajax_dms_add_fields", "dms_ajax_update_fields");
-function dms_ajax_update_fields() {
+add_action("wp_ajax_dms2_dms_add_fields", "dms2_dms_ajax_update_fields");
+function dms2_dms_ajax_update_fields() {
 	global $wpdb;
 	$res = $_REQUEST;
 	$name;
@@ -142,58 +142,58 @@ function dms_ajax_update_fields() {
 		}
 	}
 	else{
-		_e("Don't bug with the code, please!",'dropdown-multisite-selector');
+		_e("Don't bug with the code, please!",'dms2_dropdown-multisite-selector');
 		die();
 	}
 
 	if ( $options ) {
 		if ( !is_array($options) ) {
-			_e("Please make sure that you have entered all fields correctly.",'dropdown-multisite-selector');
+			_e("Please make sure that you have entered all fields correctly.",'dms2_dropdown-multisite-selector');
 			die();
 		}
 	}
 	else{
-		_e("Please enter a place tag name.",'dropdown-multisite-selector');
+		_e("Please enter a place tag name.",'dms2_dropdown-multisite-selector');
 		die();
 	}
 
 	//sanitaze
-	if($name !== false) {$name = cleanInput(sanitize($name));}
-	$options = cleanInput(sanitize($options));
-	$multisite = cleanInput(sanitize($multisite));
-	$placeholder = cleanInput(sanitize($placeholder));
+	if($name !== false) {$name = dms2_cleanInput(dms2_sanitize($name));}
+	$options = dms2_cleanInput(dms2_sanitize($options));
+	$multisite = dms2_cleanInput(dms2_sanitize($multisite));
+	$placeholder = dms2_cleanInput(dms2_sanitize($placeholder));
 
 	//uploade in db
-	$options_db_name = 'dms_select_name';
-	$options_db_select = 'dms_options';
-	$options_db_multisite = 'dms_multisite';
-	$options_db_placeholder = 'dms_placeholder';
+	$options_db_name = 'dms2_dms_select_name';
+	$options_db_select = 'dms2_dms_options';
+	$options_db_multisite = 'dms2_dms_multisite';
+	$options_db_placeholder = 'dms2_dms_placeholder';
 
   
 	if ( get_option( $options_db_name ) !=  $name ) {
 		if(!update_option($options_db_name , $name )) {
-			_e("Something went worng with updating your settigns.",'dropdown-multisite-selector');
+			_e("Something went worng with updating your settigns.",'dms2_dropdown-multisite-selector');
 			die();
 		}
 	}
 
 	if ( get_option( $options_db_select ) != $options ) {
 		if(!update_option($options_db_select , $options )) {
-		   _e("Something went worng with updating your settigns.",'dropdown-multisite-selector');
+		   _e("Something went worng with updating your settigns.",'dms2_dropdown-multisite-selector');
 			die();
 		}
 	}
 
 	if ( get_option( $options_db_multisite ) != $multisite ) {
 		if(!update_option($options_db_multisite , $multisite )) {
-		   _e("Something went worng with updating your settigns.",'dropdown-multisite-selector');
+		   _e("Something went worng with updating your settigns.",'dms2_dropdown-multisite-selector');
 			die();
 		}
 	}
 
 	if ( get_option( $options_db_placeholder ) != $placeholder ) {
 		if(!update_option($options_db_placeholder , $placeholder )) {
-		   _e("Something went worng with updating your settigns.",'dropdown-multisite-selector');
+		   _e("Something went worng with updating your settigns.",'dms2_dropdown-multisite-selector');
 			die();
 		}
 	}
@@ -206,7 +206,7 @@ function dms_ajax_update_fields() {
 /**
  * Register the shortcode
  */
-function build_select(){
+function dms2_build_select(){
    
 	$sites_per_user;
 	$current_site_id;
@@ -216,9 +216,9 @@ function build_select(){
 	$multisite; // the multisite option
 	$placeholder;
 	
-	$options_db_name = 'dms_select_name';
-	$options_db_multisite = 'dms_multisite';
-	$options_db_placeholder = 'dms_placeholder';
+	$options_db_name = 'dms2_dms_select_name';
+	$options_db_multisite = 'dms2_dms_multisite';
+	$options_db_placeholder = 'dms2_dms_placeholder';
 	
 	if ( get_option( $options_db_name ) ) {
 		$name = get_option( $options_db_name );
@@ -232,23 +232,23 @@ function build_select(){
 		$placeholder = get_option( $options_db_placeholder );
 	}
 	else{
-		$placeholder = __('Select Option','dropdown-multisite-selector');
+		$placeholder = __('Select Option','dms2_dropdown-multisite-selector');
 	}
 
 	$out .="<div class='dms-container'>";
-	if($name !== false){$out .= "<label for='dms-select'>" . $name . "</label>";}
-	$out .= "<select class='dms-select'>"; 
+	if($name !== false){$out .= "<label for='dms2_dms-select'>" . $name . "</label>";}
+	$out .= "<select class='dms2_dms-select'>"; 
 	$out .= "<option value=''>".$placeholder."</option>";
 
 	if ($multisite == 'none') {
-		$out .= noneOptions();
+		$out .= dms2_noneOptions();
 	}
 	elseif ($multisite == 'all') {
-		$out .= showAll();
+		$out .= dms2_showAll();
 	}
 	elseif ($multisite =="usersonly"){
 		if (is_user_logged_in()) {
-			$out .= usersOnly();
+			$out .= dms2_usersOnly();
 		}
 		else{
 			return false;
@@ -262,16 +262,16 @@ function build_select(){
 	return $out;  
 
 }
-add_shortcode('dms','build_select');
+add_shortcode('dms2','dms2_build_select');
 
 
 /**
 * Functions for displaying the select options on the front
 */
 	
-function noneOptions(){
+function dms2_noneOptions(){
 	$out = "";
-	$options_db_select = 'dms_options';
+	$options_db_select = 'dms2_dms_options';
 
 	if ( get_option( $options_db_select ) ) {
 		$options = get_option( $options_db_select );
@@ -284,7 +284,7 @@ function noneOptions(){
 		}
 	}
 	else{
-		$err = "<p class='error-front'>" . __("Missing data. Check if all the settigns are correctly set in your admin area regarding 'Dropdown Multisite selector'",'dropdown-multisite-selector') . "</p>";
+		$err = "<p class='error-front'>" . __("Missing data. Check if all the settigns are correctly set in your admin area regarding 'Dropdown Multisite selector'",'dms2_dropdown-multisite-selector') . "</p>";
 		return $err;
 		die();
 	}
@@ -293,7 +293,7 @@ function noneOptions(){
 }
 
 //show all sites from the WMN
-function showAll(){
+function dms2_showAll(){
 
 	$out;
 	$all_wmn_sites = wp_get_sites();
@@ -311,7 +311,7 @@ function showAll(){
 }
 
 //show only the sites from the WMN which the user is regged in
-function usersOnly(){
+function dms2_usersOnly(){
 
 	$out;
 	$users_sites = get_blogs_of_user( get_current_user_ID() );
@@ -331,7 +331,7 @@ function usersOnly(){
  * @param  string/array $input
  * @return string/array
  */
-function cleanInput($input) {
+function dms2_cleanInput($input) {
 	
 	$search = array(
 		'@<script[^>]*?>.*?</script>@si',
@@ -344,18 +344,18 @@ function cleanInput($input) {
 	return $output;
 }
 
-function sanitize($input) {
+function dms2_sanitize($input) {
 
 	if (is_array($input)) {
 		foreach($input as $var=>$val) {
-			$output[$var] = sanitize($val);
+			$output[$var] = dms2_sanitize($val);
 		}
 	}
 	else {
 		if (get_magic_quotes_gpc()) {
 			$input = stripslashes($input);
 		}
-		$input  = cleanInput($input);
+		$input  = dms2_cleanInput($input);
 		//$output = mysqli_real_escape_string($input); //For some reasons is deleting the urls
 	}
 	return $input;
@@ -363,54 +363,54 @@ function sanitize($input) {
 
 
 // Creating the widget 
-class dms_widget extends WP_Widget {
+class dms2_dms_widget extends WP_Widget {
 
 	function __construct() {
 		parent::__construct(
 		// Base ID
-		'dms_widget', 
+		'dms2_dms_widget', 
 
 		// Widget name
-		__('Dropdown Multisite Selector', 'dropdown-multisite-selector'), 
+		__('Dropdown Multisite Selector 2', 'dms2_dropdown-multisite-selector'), 
 
 		// Widget description
-		array( 'description' => __( 'Shows a select options with site/multisites.', 'dropdown-multisite-selector' ), ) 
+		array( 'description' => __( 'Shows a select options with site/multisites.', 'dms2_dropdown-multisite-selector' ), ) 
 		);
 	}
 
 	// This is where the action happens
 	public function widget( $args, $instance ) {
-		echo do_shortcode('[dms]');
+		echo do_shortcode('[dms2]');
 	}
 
 } 
 
 // Register and load the widget
-function dms_load_widget() {
-	register_widget( 'dms_widget' );
+function dms2_dms_load_widget() {
+	register_widget( 'dms2_dms_widget' );
 }
-add_action( 'widgets_init', 'dms_load_widget' );
+add_action( 'widgets_init', 'dms2_dms_load_widget' );
 
 
 
 // On install check if dms_mutisite option exists, if not - this is updating from 0.1 so create it with option 'none'
 // On install check if dms_placeholder option exists, if not - this is updating from 0.33 so create it with option 'none'
-function myplugin_activate() {
-	if(!get_option('dms_multisite')){
-    	update_option('dms_multisite', 'none');
+function dms2_myplugin_activate() {
+	if(!get_option('dms2_dms_multisite')){
+    	update_option('dms2_dms_multisite', 'none');
 	}
-	if(!get_option('dms_placeholder')){
-    	update_option('dms_placeholder', 'Select Option');
+	if(!get_option('dms2_dms_placeholder')){
+    	update_option('dms2_dms_placeholder', 'Select Option');
 	}
 }
-register_activation_hook( __FILE__, 'myplugin_activate' );
+register_activation_hook( __FILE__, 'dms2_myplugin_activate' );
 
-function myplugin_update_db_check() {
-	if(!get_option('dms_multisite')){
-    	update_option('dms_multisite', 'none');
+function dms2_myplugin_update_db_check() {
+	if(!get_option('dms2_dms_multisite')){
+    	update_option('dms2_dms_multisite', 'none');
 	}
-	if(!get_option('dms_placeholder')){
-	   	update_option('dms_placeholder', 'Select Option');
+	if(!get_option('dms2_dms_placeholder')){
+	   	update_option('dms2_dms_placeholder', 'Select Option');
 	}
 }
-add_action( 'plugins_loaded', 'myplugin_update_db_check' );
+add_action( 'plugins_loaded', 'dms2_myplugin_update_db_check' );

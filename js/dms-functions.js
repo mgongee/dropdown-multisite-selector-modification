@@ -2,18 +2,18 @@ jQuery(document).ready(function(){
 
 	
 	//Add new row in the table with new fields
-	jQuery('#dms-add').on('click',function(){
+	jQuery('#dms2_dms-add').on('click',function(){
 		
 		
 		//build the new row
 		var newRow = jQuery('<tr></tr>').addClass('new-row');
 
-		var tdName = jQuery('<td></td>').html('<input type="text" name="field_name" >').appendTo(newRow);
-		var tdUrl = jQuery('<td></td>').html('<input type="text" class="urls" name="field_url" >').appendTo(newRow);
+		var tdName = jQuery('<td></td>').html('<input type="text" name="dms2_field_name" >').appendTo(newRow);
+		var tdUrl = jQuery('<td></td>').html('<input type="text" class="dms2_urls" name="dms2_field_url" >').appendTo(newRow);
 		var tdDel = jQuery('<td></td>').html('<input type="button" class="del_row" value=" X ">').appendTo(newRow);
 		
 		newRow.fadeIn('slow', function(){
-			jQuery(this).appendTo('#dms-table');
+			jQuery(this).appendTo('#dms2_dms-table');
 		})
 		return false;
 	});
@@ -23,12 +23,12 @@ jQuery(document).ready(function(){
 
 		var this_row = jQuery(this).parent().parent();
 		//Get the number of rows
-		var numRow = jQuery('#dms-table > tbody >tr').length;
+		var numRow = jQuery('#dms2_dms-table > tbody >tr').length;
 
 		//Check if is the only one
 		if ( numRow == 1 ){
-			jQuery('input:text[name=field_name]').val('');
-			jQuery('input:text[name=field_url]').val('');
+			jQuery('input:text[name=dms2_field_name]').val('');
+			jQuery('input:text[name=dms2_field_url]').val('');
 		}
 		else{
 			jQuery(this_row).fadeOut(400, function(){
@@ -40,7 +40,7 @@ jQuery(document).ready(function(){
 	});
 
 	//check for http://
-	jQuery('body').on('change', 'input.urls', function(){
+	jQuery('body').on('change', 'input.dms2_urls', function(){
 		var val = jQuery(this).val();
 		if ( val.search('http://') < 0 && val.search('https://') < 0 ) {
 			val = 'http://' + val.trim();
@@ -61,7 +61,8 @@ jQuery(document).ready(function(){
 	});
 
 	//Submit form
-	jQuery('#dms-submit').on('click',function(){
+	jQuery('#dms2_dms-submit').on('click',function(){
+		
 		var error_fields = 0;
 		var error_name = 0;
 		var theSelectName;
@@ -99,7 +100,7 @@ jQuery(document).ready(function(){
 
 
 		//Get all values of all inputs and build array
-		jQuery("#dms-table > tbody >tr").each(function(){
+		jQuery("#dms2_dms-table > tbody >tr").each(function(){
 			
 			var theName = '';
 			var theUrl = '';
@@ -166,7 +167,7 @@ jQuery(document).ready(function(){
 		
 		//Ajax
 		var the_data = {
-			action: 'dms_add_fields',
+			action: 'dms2_dms_add_fields',
 			name: theSelectName,
 			options: theOptions,
 			multisite: multisite,
@@ -174,7 +175,7 @@ jQuery(document).ready(function(){
 		}
 
 		jQuery.ajax({
-			url: dms_ajax_vars.ajax_url,
+			url: dms2_dms_ajax_vars.ajax_url,
 			data: the_data,
 			type: "post",
 			success: function (response){
